@@ -3,8 +3,16 @@ const { minify } = require("terser");
 const metagen = require("eleventy-plugin-metagen");
 const eleventyNavigation = require("@11ty/eleventy-navigation");
 const Image = require("@11ty/eleventy-img");
+const {listerFichiers} = require("./utils/nextcloud.js");
 
 module.exports = (eleventyConfig) => {
+
+  eleventyConfig.addShortcode('fichiersNextcloud', async function () {
+    const images = await listerFichiers('/Photos');
+    return images
+      .map(image => `<li><img src="${image}" alt="Image de Nextcloud"></li>`)
+      .join('');
+  });
 
   eleventyConfig.addPlugin(metagen);
   eleventyConfig.addPlugin(eleventyNavigation);
