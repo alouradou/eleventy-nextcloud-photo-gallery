@@ -1,6 +1,19 @@
 <div class="gallery">
-    <p>{% fichiersNextcloud %}</p>
+    <ul class="image-grid">
+    {% for dir in collections.years %}
+        <li class="image-container">
+            <a
+              href="{{ dir.url }}"
+            >
+          <div class="grid-image">
+              <h2>{{ dir.name }}</h2>
+              <p>{{ dir.internalHref }}</p>
+          </div>
+        </a>
+        </li>
+    {% endfor %}
     <br/>
+    </ul>
   <ul class="image-grid">
     {% for image in gallery %}
     <li class="image-container">

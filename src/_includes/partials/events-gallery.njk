@@ -1,0 +1,16 @@
+<div class="gallery">
+    <ul class="gallery-list">
+        {% for dir in collections.events %}
+        <li class="gallery-item">
+            <a
+              href="{{ dir.url }}"
+            >
+          <div class="image-block">
+              <h2>{{ dir.name }}</h2>
+              <p>{{ dir.internalHref }}</p>
+          </div>
+        </a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>

@@ -3,7 +3,8 @@ const { minify } = require("terser");
 const metagen = require("eleventy-plugin-metagen");
 const eleventyNavigation = require("@11ty/eleventy-navigation");
 const Image = require("@11ty/eleventy-img");
-const {listerFichiers} = require("./utils/nextcloud.js");
+const {listerFichiers, getDetailedFileList, getDirectories} = require("./utils/nextcloud.js");
+const collectionsConfig = require("./config/collections.js")
 
 module.exports = (eleventyConfig) => {
 
@@ -13,6 +14,8 @@ module.exports = (eleventyConfig) => {
       .map(image => `<li><img src="${image}" alt="Image de Nextcloud"></li>`)
       .join('');
   });
+
+  collectionsConfig(eleventyConfig);
 
   eleventyConfig.addPlugin(metagen);
   eleventyConfig.addPlugin(eleventyNavigation);

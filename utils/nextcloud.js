@@ -44,4 +44,25 @@ async function listerFichiers(dossier = '/') {
   }
 }
 
-module.exports = { listerFichiers };
+async function getDetailedFileList(path = '/') {
+    try {
+        const client = await createNextcloudClient();
+        return await client.getFolderFileDetails(path);
+    } catch (error) {
+        console.error('Erreur lors de l\'accès à Nextcloud:', error);
+        return [];
+    }
+}
+
+async function getDirectories(path = '/') {
+    try {
+        const files = await getDetailedFileList(path);
+        return files.filter(file => file.isDirectory);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des dossiers:', error);
+        return [];
+    }
+}
+
+
+module.exports = { listerFichiers, getDetailedFileList, getDirectories };
