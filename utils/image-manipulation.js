@@ -18,6 +18,8 @@ async function downloadImageCollection(albums, incremental = true) {
                 try {
                     await fs.access(localPath);
                     console.log(`[nextcloud-img] Existing, download skipped ${localPath}`);
+                    image.href = localUrl;
+                    image.url = localUrl;
                     continue; // Skip this image in the loop
                 } catch (err) {
                     err.code === 'ENOENT'
