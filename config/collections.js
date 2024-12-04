@@ -46,6 +46,8 @@ module.exports = function (eleventyConfig) {
             }
         }
 
+        console.warn(events[1].images);
+
         // Download all the images
         await downloadImageCollection(events);
 

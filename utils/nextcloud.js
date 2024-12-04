@@ -64,7 +64,7 @@ async function downloadImage(remotePath, localPath) {
                 fs.mkdirSync(localDir, { recursive: true });
             }
 
-            const readStream = await client.getReadStream(remotePath);
+            const readStream = await client.getReadStream(decodeURIComponent(remotePath));
 
             const writeStream = fs.createWriteStream(localPath);
 
