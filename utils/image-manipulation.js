@@ -12,6 +12,7 @@ async function downloadImageCollection(albums, incremental = true) {
         for (const image of album.images) {
             const imageName = path.basename(image.name);
             const localPath = path.join(outputDir, album.year, album.name, imageName);
+            const localUrl = `/images/${album.year}/${album.name}/${imageName}`;
 
             if (incremental) {
                 try {
@@ -27,6 +28,9 @@ async function downloadImageCollection(albums, incremental = true) {
 
             try {
                 await downloadImage(`${config.SERVER_URL}${image.href}`, localPath);
+
+                image.href = localUrl;
+                image.url = localUrl;
             } catch (err) {
                 console.error(`[nextcloud-img] Error downloading ${JSON.stringify(image)}: ${err.message}`);
             }
