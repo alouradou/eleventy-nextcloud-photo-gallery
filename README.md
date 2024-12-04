@@ -22,8 +22,9 @@ Quickly generate a highly performant photo gallery from this template by clickin
 1. Clone this repo: `git clone https://github.com/tannerdolby/eleventy-photo-gallery.git`
 2. Navigate to your local copy of the project: `cd eleventy-photo-gallery`
 3. Install dependencies: `npm install`
-4. Build: `npm run build`
-5. Serve locally: `npm run start` or `npm run dev`
+4. Copy `.env.tempate` to `.env` and set your credentials
+5. Build: `npm run build`
+6. Serve locally: `npm run start` or `npm run dev`
 
 ## Usage
 Add images to a folder such as `images` in your project and then supply an array of image metadata objects in a global data file `_data/gallery.json`:
