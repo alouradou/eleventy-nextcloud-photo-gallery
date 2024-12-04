@@ -1,4 +1,4 @@
-const {getDirectories} = require("../utils/nextcloud.js");
+const {getDirectories, getImagesFromDirectory} = require("../utils/nextcloud.js");
 const config = require("../config/config.js")
 
 module.exports = function (eleventyConfig) {
@@ -19,35 +19,34 @@ module.exports = function (eleventyConfig) {
 
     eleventyConfig.addCollection('events', async function (collectionsApi) {
         let directories = await getDirectories(config.basePath);
-        directories = directories.map(directory => ({
-            ...directory,
-            internalHref: directory.href.replace(
-                new RegExp(`^/remote\\.php/dav/files/admin${config.basePath}`),
-                ''),
-            url: `/content${directory.href.replace(
-                new RegExp(`^/remote\\.php/dav/files/admin${config.basePath}`),
-                ''
-            )}`
-        }));
 
-        let allPublishedDirectories = [];
+        let events = [];
 
         for (const year of directories) {
-            const yearPath = `${config.basePath}/${year.name}`; // Ajouter l'année au chemin de base
+            const yearPath = `${config.basePath}/${year.name}`;
             const directories = await getDirectories(yearPath);
+            const imageHrefs = []
+            for (const content of directories){
+                imageHrefs[content.href] = await getImagesFromDirectory(content.href.replace(
+                    new RegExp(`^/remote\\.php/dav/files/${config.account}`),
+                    ''
+                ));
+            }
 
-            console.warn(directories)
-
-            allPublishedDirectories = [
-                ...allPublishedDirectories,
+            events = [
                 ...directories.map(dir => ({
                     ...dir,
+                    images: imageHrefs[dir.href],
+                    url: `/events${dir.href.replace(
+                        new RegExp(`^/remote\\.php/dav/files/${config.account}${config.basePath}`),
+                        ''
+                    )}`,
                     year: year.name
                 }))
             ];
         }
 
-        return allPublishedDirectories;
+        return events;
     });
 
 }

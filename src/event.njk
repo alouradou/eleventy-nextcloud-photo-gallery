@@ -1,0 +1,31 @@
+---
+title: Event
+pagination:
+  data: collections.events
+  size: 1
+  alias: event
+layout: main.njk
+permalink: "{{ event.url | url }}"
+meta_desc: An event from Nextcloud.
+cardType: summary_large_image
+---
+
+<div class="gallery">
+    <h1>{{ event.name }}</h1>
+    <ul class="gallery-list">
+        {% for image in event.images %}
+{#            <li>{{ image | stringify }}</li>#}
+            <li class="gallery-item">
+                <div class="image-block">
+                    <img
+                        src="http://localhost:8080{{ image.href }}"
+                        alt="{{ image.name }}"
+                        loading="lazy"
+                        decoding="async"
+                        class="gallery-photo"
+                    >
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

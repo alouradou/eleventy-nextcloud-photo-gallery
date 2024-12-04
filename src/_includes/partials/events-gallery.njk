@@ -1,13 +1,14 @@
 <div class="gallery">
     <ul class="gallery-list">
-        {% for dir in collections.events %}
+        {% for event in collections.events %}
         <li class="gallery-item">
             <a
-              href="{{ dir.url }}"
+              href="{{ event.url }}"
             >
           <div class="image-block">
-              <h2>{{ dir.name }}</h2>
-              <p>{{ dir.internalHref }}</p>
+              <h2>{{ event.name }}</h2>
+              <p>{{ event.url }}</p>
+              <p>From {{ event.year }}</p>
           </div>
         </a>
         </li>

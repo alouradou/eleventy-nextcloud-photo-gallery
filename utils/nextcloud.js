@@ -64,5 +64,14 @@ async function getDirectories(path = '/') {
     }
 }
 
+async function getImagesFromDirectory(directory = '/') {
+    try {
+        const files = await getDetailedFileList(directory);
+        return files.filter(file => file.isFile === true);
+    } catch (error) {
+        console.error(`Erreur lors de la récupération des images du dossier ${directory}:`, error)
+    }
+}
 
-module.exports = { listerFichiers, getDetailedFileList, getDirectories };
+
+module.exports = { listerFichiers, getDetailedFileList, getDirectories, getImagesFromDirectory };
