@@ -1,6 +1,3 @@
-const fs =  require('fs/promises');
-const path = require('path');
-
 require('dotenv').config();
 const config = process.env
 
@@ -24,6 +21,16 @@ async function getDetailedFileList(path = '/') {
     }
 }
 
+async function getFilesFromDirectory(path = '/') {
+    try {
+        return await client.getFiles(path);
+    } catch (error) {
+        console.error('Erreur lors de l\'accès à Nextcloud:', error);
+        return [];
+    }
+}
+
+
 async function getDirectories(path = '/') {
     try {
         const files = await getDetailedFileList(path);
@@ -44,4 +51,4 @@ async function getImagesFromDirectory(directory = '/') {
 }
 
 
-module.exports = { getDetailedFileList, getDirectories, getImagesFromDirectory };
+module.exports = { createNextcloudClient,getDetailedFileList, getDirectories, getImagesFromDirectory };

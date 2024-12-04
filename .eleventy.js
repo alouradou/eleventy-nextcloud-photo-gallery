@@ -7,7 +7,7 @@ const collectionsConfig = require("./config/collections.js")
 
 module.exports = (eleventyConfig) => {
 
-
+  eleventyConfig.addGlobalData('env', process.env);
 
   collectionsConfig(eleventyConfig);
 

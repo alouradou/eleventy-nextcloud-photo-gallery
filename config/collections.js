@@ -17,35 +17,34 @@ module.exports = function (eleventyConfig) {
     });
 
     eleventyConfig.addCollection('events', async function (collectionsApi) {
-        let directories = await getDirectories(config.ALBUM_PATH);
+        const events = [];
 
-        let events = [];
+        const years = await getDirectories(config.ALBUM_PATH);
 
-        for (const year of directories) {
+        for (const year of years) {
             const yearPath = `${config.ALBUM_PATH}/${year.name}`;
-            const directories = await getDirectories(yearPath);
-            const imageHrefs = []
-            for (const content of directories){
-                imageHrefs[content.href] = await getImagesFromDirectory(content.href.replace(
+            const eventDirectories = await getDirectories(yearPath);
+
+            for (const event of eventDirectories) {
+                const eventPath = event.href.replace(
                     new RegExp(`^/remote\\.php/dav/files/${config.USERNAME}`),
                     ''
-                ));
-            }
+                );
 
-            events = [
-                ...directories.map(dir => ({
-                    ...dir,
-                    images: imageHrefs[dir.href],
-                    url: `/events${dir.href.replace(
+                const images = await getImagesFromDirectory(eventPath);
+
+                events.push({
+                    name: event.name,
+                    year: year.name,
+                    images,
+                    url: `/events${event.href.replace(
                         new RegExp(`^/remote\\.php/dav/files/${config.USERNAME}${config.ALBUM_PATH}`),
                         ''
                     )}`,
-                    year: year.name
-                }))
-            ];
+                });
+            }
         }
 
         return events;
     });
-
 }

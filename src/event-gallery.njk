@@ -18,7 +18,7 @@ cardType: summary_large_image
             <li class="gallery-item">
                 <div class="image-block">
                     <img
-                        src="http://localhost:8080{{ image.href }}"
+                        src="{{ env.SERVER_URL }}{{ image.href }}"
                         alt="{{ image.name }}"
                         loading="lazy"
                         decoding="async"
