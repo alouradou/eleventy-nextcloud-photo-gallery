@@ -1,0 +1,14 @@
+---
+pagination:
+  data: collections.years
+  size: 1
+  alias: year
+permalink: "/{{ year.url }}/"
+layout: main.njk
+meta_desc: Events from Nextcloud for {{ year.name }}.
+cardType: summary_large_image
+---
+
+<h1 class="gallery-h1">Events for {{ year.name }}</h1>
+
+{% include "partials/events-gallery.njk" %}

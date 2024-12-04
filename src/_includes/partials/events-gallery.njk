@@ -1,17 +1,33 @@
 <div class="gallery">
     <ul class="gallery-list">
-        {% for event in collections.events %}
-        <li class="gallery-item">
-            <a
-              href="{{ event.url }}"
-            >
-          <div class="image-block">
-              <h2>{{ event.name }}</h2>
-              <p>{{ event.url }}</p>
-              <p>From {{ event.year }}</p>
-          </div>
-        </a>
-        </li>
-    {% endfor %}
+        {% if year %}
+            {% for event in collections.events | filterByYear(year.name) %}
+                <li class="gallery-item">
+                    <a
+                      href="{{ event.url }}"
+                    >
+                  <div class="image-block">
+                      <h2>{{ event.name }}</h2>
+                      <p>{{ event.url }}</p>
+                      <p>From {{ event.year }}</p>
+                  </div>
+                </a>
+                </li>
+            {% endfor %}
+        {% else %}
+            {% for event in collections.events %}
+                <li class="gallery-item">
+                    <a
+                      href="{{ event.url }}"
+                    >
+                  <div class="image-block">
+                      <h2>{{ event.name }}</h2>
+                      <p>{{ event.url }}</p>
+                      <p>From {{ event.year }}</p>
+                  </div>
+                </a>
+                </li>
+            {% endfor %}
+        {% endif %}
     </ul>
 </div>

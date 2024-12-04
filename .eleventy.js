@@ -32,6 +32,10 @@ module.exports = (eleventyConfig) => {
     return JSON.stringify(obj, null, 2)
   })
 
+  eleventyConfig.addFilter('filterByYear', function(events, year) {
+      return events.filter(event => event.year === year);
+  });
+
   // Create css-clean CSS Minifier filter
   eleventyConfig.addFilter("cssmin", function (code) {
     return new CleanCSS({}).minify(code).styles;
