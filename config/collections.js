@@ -6,10 +6,7 @@ module.exports = function (eleventyConfig) {
         let directories = await getDirectories(config.basePath);
         directories = directories.map(directory => ({
             ...directory,
-            internalHref: directory.href.replace(
-                new RegExp(`^/remote\\.php/dav/files/${config.account}${config.basePath}`),
-                ''),
-            url: `/content${directory.href.replace(
+            url: `/events${directory.href.replace(
                 new RegExp(`^/remote\\.php/dav/files/${config.account}${config.basePath}`),
                 ''
             )}`

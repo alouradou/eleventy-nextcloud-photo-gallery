@@ -2,15 +2,11 @@
     "author": {
         "firstName": "John",
         "lastName": "Smith",
-        "email": "foobar@gmail.com",
-        "twitterHandle": "tannerdolby",
-        "about": "Freelance photographer interested in film and cinematography"
+        "email": "foobar@domain.local",
+        "about": "Nextcloud photo gallery with Eleventy"
     },
     "socials": {
-        "twitter": "https://twitter.com/tannerdolby",
-        "linkedin": "https://linkedin.com/in/tanner-dolby",
-        "dribbble": "https://dribbble.com/tannerdolby",
-        "github": "https://github.com/tannerdolby"
+        "github": "https://github.com/alouradou"
     },
     "pageMetadata": {
         "home": {
