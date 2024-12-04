@@ -1,5 +1,5 @@
 const {getDirectories, getImagesFromDirectory} = require("../utils/nextcloud.js");
-const {prepareImages} = require("../utils/image-manipulation.js");
+const {downloadImageCollection} = require("../utils/image-manipulation.js");
 
 require('dotenv').config();
 const config = process.env
@@ -47,7 +47,7 @@ module.exports = function (eleventyConfig) {
         }
 
         // Download all the images
-        await prepareImages(events);
+        await downloadImageCollection(events);
 
         return events;
     });
