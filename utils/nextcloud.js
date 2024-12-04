@@ -77,7 +77,7 @@ async function downloadImage(remotePath, localPath) {
 
             console.log(`Image téléchargée : ${localPath}`);
         } catch (err) {
-            console.error(`[nextcloud-link] Error downloading ${remotePath} :`, err.message);
+            console.error(`[nextcloud-link] Error downloading`, err.message);
         }
     } catch (error) {
         console.error('Erreur lors de l\'accès à Nextcloud:', error);
