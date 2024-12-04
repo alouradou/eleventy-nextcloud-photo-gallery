@@ -74,8 +74,6 @@ async function downloadImage(remotePath, localPath) {
                 readStream.on('error', reject);
                 writeStream.on('error', reject);
             });
-
-            console.log(`Image téléchargée : ${localPath}`);
         } catch (err) {
             console.error(`[nextcloud-link] Error downloading`, err.message);
         }
