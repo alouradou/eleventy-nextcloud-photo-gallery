@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 require('dotenv').config();
 const config = process.env
 
@@ -51,4 +54,37 @@ async function getImagesFromDirectory(directory = '/') {
 }
 
 
-module.exports = { createNextcloudClient,getDetailedFileList, getDirectories, getImagesFromDirectory };
+async function downloadImage(remotePath, localPath) {
+    try {
+        const client = await createNextcloudClient();
+
+        try {
+            const localDir = path.dirname(localPath);
+            if (!fs.existsSync(localDir)) {
+                fs.mkdirSync(localDir, { recursive: true });
+            }
+
+            const readStream = await client.getReadStream(remotePath);
+
+            const writeStream = fs.createWriteStream(localPath);
+
+            await new Promise((resolve, reject) => {
+                readStream.pipe(writeStream);
+                readStream.on('end', resolve);
+                readStream.on('error', reject);
+                writeStream.on('error', reject);
+            });
+
+            console.log(`Image téléchargée : ${localPath}`);
+        } catch (err) {
+            console.error(`Erreur lors du téléchargement de l'image ${remotePath} :`, err.message);
+        }
+    } catch (error) {
+        console.error('Erreur lors de l\'accès à Nextcloud:', error);
+        return [];
+    }
+}
+
+
+
+module.exports = { createNextcloudClient,getDetailedFileList, getDirectories, getImagesFromDirectory, downloadImage };
