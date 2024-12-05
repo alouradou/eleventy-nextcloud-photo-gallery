@@ -9,7 +9,7 @@ services:
       - nextcloud-net
     volumes:
       # Mount the directory containing Nextcloud files
-      - <path-to-directory>/nextcloud-instance:/var/www/html
+      - <path-to-nextcloud-directory-on-host>/nextcloud-instance:/var/www/html
       # Mount a Docker volume for photo storage
       - nextcloud-photos:/var/www/html/data/external/files/Photos
   eleventy:
@@ -18,8 +18,8 @@ services:
     build: .
     ports:
       - "8081:8080" # Avoid conflict with Nextcloud on host machine
-    # volumes:
-    #   - nextcloud-photos:/app/_site/images:ro
+    volumes:
+     - <path-to-nextcloud-directory-on-host>/Images:/app/_site/images:ro
     environment:
       - NODE_ENV=production
     networks:
