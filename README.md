@@ -1,12 +1,13 @@
 # Eleventy Photo Gallery
 
-A starter site for creating your own photo or art gallery using the [Eleventy](https://github.com/11ty/eleventy) static site generator.
+An advanced application to host a photo gallery from a [Nextcloud](https://nextcloud.com/) instance.
+Built with [Eleventy](https://github.com/11ty/eleventy) static site generator.
 
-- [Live demo](https://eleventy-gallery.netlify.app/) - View the project live
-- [Deploy on Netlify](https://app.netlify.com/) - Host your own custom gallery
+Forked from https://github.com/tannerdolby/eleventy-photo-gallery.git photo gallery.
 
 ## Getting Started
-Quickly generate a highly performant photo gallery from this template by clicking the green [Use Template](https://github.com/tannerdolby/eleventy-photo-gallery/generate) button. Creating a template repository provides the same directory structure and files as the original project.
+1. Build and install a Nextcloud instance with Docker : https://nextcloud.com/install/
+2. Follow the steps for a local setup (cf. '## Local Setup')
 
 ## Features 
 - Build-time image transformations and responsive image markup in templates using [@11ty/eleventy-img](https://www.11ty.dev/docs/plugins/image/)
