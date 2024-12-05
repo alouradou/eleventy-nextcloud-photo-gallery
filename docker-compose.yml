@@ -24,9 +24,6 @@ services:
       - NODE_ENV=production
     networks:
       - nextcloud-net
-volumes:
-  nextcloud-photos:
-    external: true
 networks:
   nextcloud-net:
     external: true

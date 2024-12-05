@@ -22,7 +22,7 @@ async function downloadImageCollection(albums, incremental = true) {
                     image.url = localUrl;
                     continue; // Skip this image in the loop
                 } catch (err) {
-                    err.code === 'ENOENT'
+                    err.code === 'ENOENT' // Error no entity is normal, is this case : download
                         ? console.log(`[nextcloud-img] Downloading ${localPath}`)
                         : console.error(`[nextcloud-img] Error in file : ${localPath}`, err.message);
                 }
