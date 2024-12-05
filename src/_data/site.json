@@ -1,9 +1,8 @@
 {   
     "author": {
-        "firstName": "John",
-        "lastName": "Smith",
+        "siteName": "Nextcloud Photo Gallery",
         "email": "foobar@domain.local",
-        "about": "Nextcloud photo gallery with Eleventy"
+        "about": "Nextcloud photo gallery made with Eleventy"
     },
     "socials": {
         "github": "https://github.com/alouradou"
