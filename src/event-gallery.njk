@@ -14,17 +14,15 @@ cardType: summary_large_image
     <h1>{{ event.name }}</h1>
     <ul class="gallery-list">
         {% for image in event.images %}
-{#            <li>{{ image | stringify }}</li>#}
             <li class="gallery-item">
                 <div class="image-block">
-                    <img
-                        src="{{ image.href }}"
-                        alt="{{ image.name }}"
-                        loading="lazy"
-                        decoding="async"
-                        class="gallery-photo"
-                        title="{{ image | stringify }}"
-                    >
+                    {% img
+                        src=image.url,
+                        alt=image.name,
+                        imgDir="./_site",
+                        className="gallery-photo",
+                        sizes="(max-width: 480px) 33.3vw, (min-width: 640px) 50vw, (min-width: 950px) 50vw, 33.3vw"
+                    %}
                 </div>
             </li>
         {% endfor %}
