@@ -19,7 +19,7 @@ Forked from https://github.com/tannerdolby/eleventy-photo-gallery.git photo gall
 - About me page
 - CSS preprocessor SCSS
 
-## Local Setup
+## Local Use with remote Nextcloud
 1. Clone this repo: `git clone https://github.com/tannerdolby/eleventy-photo-gallery.git`
 2. Navigate to your local copy of the project: `cd eleventy-photo-gallery`
 3. Install dependencies: `npm install`
@@ -27,7 +27,132 @@ Forked from https://github.com/tannerdolby/eleventy-photo-gallery.git photo gall
 5. Build: `npm run build`
 6. Serve locally: `npm run start` or `npm run dev`
 
-## Usage
+## Nextcloud setup
+
+This project uses Nextcloud to manage and host photo albums, which are accessed and integrated into the Eleventy website. Below are the steps to set up a Nextcloud instance using Docker.
+
+1. Prerequisites
+- Docker and Docker Compose installed on your system.
+- To use this app with Docker Compose, you need to configure Nextcloud in a Docker network and data.
+
+
+Here is the Nextcloud Setup section for your README.md in English:
+
+Nextcloud Setup
+
+This project uses Nextcloud to manage and host photo albums, which are accessed and integrated into the Eleventy website. Below are the steps to set up a Nextcloud instance using Docker.
+
+1. Prerequisites
+Docker and Docker Compose installed on your system.
+Basic understanding of Docker networking and volumes.
+
+
+2. Docker Compose Configuration
+
+**Create a docker-compose.yml file to deploy the Nextcloud instance:**
+```yaml
+version: "3.8"
+
+services:
+  nextcloud:
+    image: nextcloud
+    container_name: nextcloud
+    ports:
+      - "8080:80" # Map port 80 inside the container to port 8080 on the host
+    networks:
+      - nextcloud-net
+    volumes:
+      # Mount the directory containing Nextcloud files
+      - <path-to-directory>/nextcloud-instance:/var/www/html
+      # Mount a Docker volume for photo storage
+      - nextcloud-photos:/var/www/html/data/external/files/Photos
+
+networks:
+  nextcloud-net:
+    external: true # Use an existing Docker network
+
+volumes:
+  nextcloud-photos:
+    external: true # Use an existing Docker volume
+```
+
+**Creating the Required Network and Volume**
+
+Run the following commands to ensure the required network and volume are created:
+```bash
+docker network create nextcloud-net
+docker volume create nextcloud-photos
+Starting the Nextcloud Service
+```
+
+**Launch Nextcloud with:**
+```bash
+docker-compose up -d
+```
+
+3. Configuring Nextcloud Trusted Domains
+
+By default, Nextcloud allows access only from certain domains. To enable communication with other containers (like Eleventy), update the config.php file in the Nextcloud container:
+
+Access the Nextcloud container:
+```bash
+docker exec -it nextcloud bash
+```
+Edit the configuration file:
+```bash
+nano /var/www/html/config/config.php
+```
+Add the following entries to the trusted_domains section:
+```php
+'trusted_domains' =>
+array (
+  0 => 'localhost',
+  1 => '127.0.0.1',
+  2 => 'nextcloud',
+),
+```
+
+Save the changes and restart the container:
+```bash
+docker restart nextcloud
+```
+
+This way, your Eleventy container will be able to `curl http://nextcloud:80`.
+
+## Docker setup
+
+This project uses Docker to containerize the Eleventy static site generator, making it easy to build and deploy in a consistent environment. The following guide explains how to set up and run the Eleventy container.
+
+1. Prerequisites
+
+Docker and Docker Compose installed on your system.
+Access to the provided Dockerfile and docker-compose.yml in the project repository.
+
+
+2. Docker Compose Configuration
+
+The docker-compose.yml file for the Eleventy service is already included in the project. You can modify it to your needs.
+
+
+3. Building and Running the Eleventy Container
+
+To build and start the Eleventy container:
+
+**Build the image:**
+```bash
+docker-compose build eleventy
+```
+**Start the Eleventy service:**
+```bash
+docker-compose up -d eleventy
+```
+**Access the Eleventy development server at:**
+```bash
+http://localhost:8081
+```
+
+
+## Json usage
 Add images to a folder such as `images` in your project and then supply an array of image metadata objects in a global data file `_data/gallery.json`:
 
 ```json
@@ -53,7 +178,7 @@ If you don't want to use a [global data file](https://www.11ty.dev/docs/data-glo
 3. Use the `img` shortcode to generate responsive image markup using `<picture>`
 4. This performs image transformations at build-time, creating varying image dimensions in the specified formats (`.jpg`, `.webp`, etc) from the original image, which outputs to the specified `outputDir` in the `img` shortcode within `.eleventy.js`
 
-```js
+```njk
 {% img 
     src="car.jpg",
     alt="A photo of a car",
@@ -63,7 +188,7 @@ If you don't want to use a [global data file](https://www.11ty.dev/docs/data-glo
 ```
 
 ## Compiling SCSS to CSS
-All of the projects CSS is compiled from Sass at build-time. The main SCSS file is `src/_includes/sass/style.scss` and thats where partials, mixins, and variables are loaded in with `@use` rules. 
+All the projects CSS is compiled from Sass at build-time. The main SCSS file is `src/_includes/sass/style.scss` and that's where partials, mixins, and variables are loaded in with `@use` rules. 
 
 If you want to change up the styles, you can write directly in `style.scss` for the changes to be compiled and used. 
 
@@ -83,9 +208,3 @@ Otherwise, if you want to continue using a "modular" approach with separate SCSS
 _Read more about loading members and namespaces here in [Sass docs](https://sass-lang.com/documentation/at-rules/use#loading-members)_
 
 </details>
-
-## Contributing 
-Feel free to report any issues and submit feature requests. I built this template for others to use so don't hesitate to let me know what you'd like to see added or modified.
-
-- Open an [issue](https://github.com/tannerdolby/11ty-photo-gallery/issues) for any bugs or feature requests! 
-- Have a look at the [contributing guidelines](https://github.com/tannerdolby/11ty-photo-gallery/blob/master/CONTRIBUTING.md) before submitting a PR!

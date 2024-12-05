@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  nextcloud:
+    image: nextcloud
+    container_name: nextcloud
+    ports:
+      - "8080:80" # Map port 80 inside the container to port 8080 on the host
+    networks:
+      - nextcloud-net
+    volumes:
+      # Mount the directory containing Nextcloud files
+      - <path-to-directory>/nextcloud-instance:/var/www/html
+      # Mount a Docker volume for photo storage
+      - nextcloud-photos:/var/www/html/data/external/files/Photos
+  eleventy:
+    image: eleventy-nextcloud-photo-gallery:v0.1-alpha
+    container_name: eleventy-nextcloud-photo-gallery
+    build: .
+    ports:
+      - "8081:8080" # Avoid conflict with Nextcloud on host machine
+    # volumes:
+    #   - nextcloud-photos:/app/_site/images:ro
+    environment:
+      - NODE_ENV=production
+    networks:
+      - nextcloud-net
+volumes:
+  nextcloud-photos:
+    external: true
+networks:
+  nextcloud-net:
+    external: true
