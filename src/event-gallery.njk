@@ -13,6 +13,9 @@ cardType: summary_large_image
 <div class="gallery">
     <h1>{{ event.name }}</h1>
     <ul class="gallery-list">
+        {% if event.images.length === 0 %}
+            <p>No image for this event. Come back later!</p>
+        {% endif %}
         {% for image in event.images %}
             <li class="gallery-item">
                 <div class="image-block">
