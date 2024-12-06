@@ -18,7 +18,7 @@ Structure in the nextcloud:
 ├── /Images  # Can be changed with `ALBUM_PATH` environment variable in `.env` 
 │   ├── 2024
 │   │   ├── Event 1
-│   │   │   ├── README.md  # Optional: Describe your Event!
+│   │   │   ├── README.md  # Optional+TODO: Describe your Event!
 │   │   │   ├── Image1.jpg
 │   │   │   ├── ...
 │   │   │   ├── Image256.jpg
