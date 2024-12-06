@@ -9,6 +9,30 @@ Forked from https://github.com/tannerdolby/eleventy-photo-gallery.git photo gall
 1. Build and install a Nextcloud instance with Docker : https://nextcloud.com/install/
 2. Follow the steps for a local setup (cf. '## Local Setup')
 
+## What for?
+
+You want to publish albums from your Nextcloud? Just use the structure below and enjoy you albums in a responsive website.
+
+Structure in the nextcloud:
+```text
+├── /Images  # Can be changed with `ALBUM_PATH` environment variable in `.env` 
+│   ├── 2024
+│   │   ├── Event 1
+│   │   │   ├── README.md  # Optional: Describe your Event!
+│   │   │   ├── Image1.jpg
+│   │   │   ├── ...
+│   │   │   ├── Image256.jpg
+│   │   ├── Event 2
+│   │   │   ├── ...
+│   │   ├── Event 3
+│   │   │   ├── ...
+│   ├── 2023
+│   │   ├── Event 1
+│   │   │   ├── ...
+│   │   ├── Event 2
+│   │   │   ├── ...
+```
+
 ## Features 
 - Build-time image transformations and responsive image markup in templates using [@11ty/eleventy-img](https://www.11ty.dev/docs/plugins/image/)
 - High performance and scalable site with 100s across the board on each page using [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/). Check it out on the [Eleventy Leaderboards](https://www.11ty.dev/speedlify/eleventy-gallery-netlify-app/)
