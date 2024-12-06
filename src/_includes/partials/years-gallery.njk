@@ -1,14 +1,13 @@
-<div class="gallery">
-    <ul class="gallery-list">
+<div class="event">
+    <ul class="event-list">
         {% for dir in collections.years %}
-        <li class="gallery-item">
+        <li class="event-item">
             <a
               href="{{ dir.url }}"
             >
-          <div class="image-block">
-              <h2>{{ dir.name }}</h2>
-              <p>{{ dir.href }}</p>
-              <p>{{ dir.url }}</p>
+          <div class="event-block">
+              <span class="event-block-title">{{ dir.name }}</span>
+              <span>{{ dir.description }}</span>
           </div>
         </a>
         </li>

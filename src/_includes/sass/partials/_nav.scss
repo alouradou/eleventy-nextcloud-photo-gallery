@@ -1,6 +1,6 @@
 header {
     .nav-main {
-        margin: 1rem auto 0 auto;
+        margin: 0 auto;
         max-width: 1100px;
         display: flex;
         justify-content: center;
@@ -16,7 +16,7 @@ header {
 
         .nav-list {
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
             padding-left: 0;
             list-style: none;
@@ -64,9 +64,9 @@ header {
     .intro {
         display: flex;
         justify-content: space-between;
-        margin: 2rem auto 1rem auto;
+        justify-self: flex-start;
+        flex-grow: 1;
         max-width: 1100px;
-        padding: 0 1.5rem;
 
         div {
             p {
@@ -82,7 +82,7 @@ header {
             font-size: 28px;
             font-size: clamp(26px, 4vw, 28px);
             color: #222;
-            margin-bottom: 14px;
+            margin-bottom: 0;
         }
 
         .hire-me {

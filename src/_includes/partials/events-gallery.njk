@@ -1,5 +1,5 @@
-<div class="gallery">
-    <ul class="gallery-list">
+<div class="event">
+    <ul class="event-list">
         {% if year %}
             {% set events = collections.events | filterByYear(year.name) %}
 
@@ -11,14 +11,14 @@
         {% endif %}
 
         {% for event in events %}
-            <li class="gallery-item">
+            <li class="event-item">
                 <a
                   href="{{ event.url }}"
                 >
-              <div class="image-block">
-                  <h2>{{ event.name }}</h2>
-                  <p>{{ event.url }}</p>
-                  <p>From {{ event.year }}</p>
+              <div class="event-block">
+                  <span class="event-block-title">{{ event.name }}</span>
+                  <span>{{ event.description }}</span>
+                  <span class="event-year">{{ event.year }}</span>
               </div>
             </a>
             </li>
