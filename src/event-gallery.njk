@@ -10,7 +10,9 @@ meta_desc: An event from Nextcloud.
 cardType: summary_large_image
 ---
 
-<div class="gallery">
+<link rel="stylesheet" href="{{ "/assets/photoswipe.css" | url }}">
+
+<div class="gallery pswp-gallery" id="event-gallery">
     <h1>{{ event.name }}</h1>
     <ul class="gallery-list">
         {% if event.images.length === 0 %}
@@ -18,7 +20,15 @@ cardType: summary_large_image
         {% endif %}
         {% for image in event.images %}
             <li class="gallery-item">
-                <div class="image-block">
+                <a
+                    class="image-block"
+                    href="{{ image.url }}"
+                    aria-label="Gallery image {{ image.name }}"
+                    data-pswp-src="{{ image.url }}"
+                    data-pswp-width="2500"
+                    data-pswp-height="1666"
+                    target="_blank"
+                >
                     {% img
                         src=image.url,
                         alt=image.name,
@@ -26,8 +36,18 @@ cardType: summary_large_image
                         className="gallery-photo",
                         sizes="(max-width: 480px) 33.3vw, (min-width: 640px) 50vw, (min-width: 950px) 50vw, 33.3vw"
                     %}
-                </div>
+                </a>
             </li>
         {% endfor %}
     </ul>
 </div>
+
+<script type="module">
+import PhotoSwipeLightbox from '{{ "/assets/photoswipe-lightbox.esm.js" | url }}';
+const lightbox = new PhotoSwipeLightbox({
+  gallery: '#event-gallery',
+  children: 'li',
+  pswpModule: () => import('{{ "/assets/photoswipe.esm.js" | url }}')
+});
+lightbox.init();
+</script>

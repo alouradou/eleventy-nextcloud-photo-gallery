@@ -3,6 +3,7 @@ const { minify } = require("terser");
 const metagen = require("eleventy-plugin-metagen");
 const eleventyNavigation = require("@11ty/eleventy-navigation");
 const Image = require("@11ty/eleventy-img");
+const setupPhotoswipe = require("./config/photoswipe.js")
 const collectionsConfig = require("./config/collections.js")
 const shortcodeConfig = require("./config/shortcodes.js")
 
@@ -10,6 +11,7 @@ module.exports = (eleventyConfig) => {
 
   eleventyConfig.addGlobalData('env', process.env);
 
+  setupPhotoswipe(eleventyConfig);
   collectionsConfig(eleventyConfig);
 
   eleventyConfig.addPlugin(metagen);
