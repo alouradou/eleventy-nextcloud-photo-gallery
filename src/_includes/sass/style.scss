@@ -280,6 +280,23 @@ h2, .h2 {
     .gallery, .event {
         .gallery-list, .event-list {
             grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+
+            li {
+                position: relative;
+                overflow: hidden; /* Assure que l'image ne dépasse pas du conteneur */
+                border-radius: 0.5rem; /* Optionnel : pour arrondir les coins */
+                cursor: pointer;
+
+                picture {
+                    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out; /* Animation fluide */
+                    transform: scale(1); /* Taille normale par défaut */
+                }
+
+                &:hover picture {
+                    transform: scale(1.1); /* Zoom sur l'image */
+                    filter: brightness(1.1); /* Optionnel : améliore légèrement la luminosité */
+                }
+            }
         }
     }
 

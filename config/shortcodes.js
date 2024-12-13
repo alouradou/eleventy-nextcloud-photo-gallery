@@ -28,7 +28,8 @@ module.exports = function (eleventyConfig) {
            widths,
            className,
            imgDir,
-           sizes = "100vw"
+           sizes = "100vw",
+           pswp = false
        }) {
         if (alt === undefined) {
             throw new Error(`Missing \`alt\` on responsive image from: ${src}`);
@@ -56,16 +57,26 @@ module.exports = function (eleventyConfig) {
         }).join("\n");
 
         const img = `
-      <img
-        src="${lowsrc.url}"
-        width="${highsrc.width}"
-        height="${highsrc.height}"
-        alt="${alt}"
-        loading="lazy"
-        decoding="async"
-        class="${className || ''}"
-      >`;
+        <img
+            src="${lowsrc.url}"
+            width="${highsrc.width}"
+            height="${highsrc.height}"
+            alt="${alt}"
+            loading="lazy"
+            decoding="async"
+            class="${className || ''}"
+        >`;
 
-        return `<picture>\n\t${sources}\n\t${img}</picture>`;
+        if (pswp) {
+            const pswpAttributes = ` data-pswp-src="${highsrc.url}" data-pswp-width="${highsrc.width}" data-pswp-height="${highsrc.height}"`
+            return `<a href="${highsrc.url}" ${pswpAttributes} target="_blank" aria-label="${alt}">
+                        <picture>\n\t${sources}\n\t${img}</picture>
+                    </a>`;
+        }
+        else {
+             return `<picture>\n\t${sources}\n\t${img}</picture>`;
+        }
+
+
     });
 }

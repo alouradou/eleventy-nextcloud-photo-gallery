@@ -19,24 +19,14 @@ cardType: summary_large_image
             <p>No image for this event. Come back later!</p>
         {% endif %}
         {% for image in event.images %}
-            <li class="gallery-item">
-                <a
-                    class="image-block"
-                    href="{{ image.url }}"
-                    aria-label="Gallery image {{ image.name }}"
-                    data-pswp-src="{{ image.url }}"
-                    data-pswp-width="2500"
-                    data-pswp-height="1666"
-                    target="_blank"
-                >
-                    {% img
-                        src=image.url,
-                        alt=image.name,
-                        imgDir="./_site",
-                        className="gallery-photo",
-                        sizes="(max-width: 480px) 33.3vw, (min-width: 640px) 50vw, (min-width: 950px) 50vw, 33.3vw"
-                    %}
-                </a>
+            <li>
+                {% img
+                    src=image.url,
+                    alt=image.name,
+                    imgDir="./_site",
+                    className="gallery-photo",
+                    pswp=true
+                %}
             </li>
         {% endfor %}
     </ul>
@@ -45,9 +35,11 @@ cardType: summary_large_image
 <script type="module">
 import PhotoSwipeLightbox from '{{ "/assets/photoswipe-lightbox.esm.js" | url }}';
 const lightbox = new PhotoSwipeLightbox({
-  gallery: '#event-gallery',
-  children: 'li',
-  pswpModule: () => import('{{ "/assets/photoswipe.esm.js" | url }}')
+    gallery: '#event-gallery',
+    children: 'a',
+    pswpModule: () => import('{{ "/assets/photoswipe.esm.js" | url }}'),
+    indexIndicatorSep: ' / ',
+    preload: [1, 4]
 });
 lightbox.init();
 </script>
