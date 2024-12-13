@@ -11,6 +11,7 @@
         {% endif %}
 
         {% for event in events %}
+            {% set coverPhoto = event.images | getCoverPhoto %}
             <li class="event-item">
                 <a
                   href="{{ event.url }}"
@@ -19,6 +20,9 @@
                   <span class="event-block-title">{{ event.name }}</span>
                   <span>{{ event.description }}</span>
                   <span class="event-year">{{ event.year }}</span>
+                  {% if coverPhoto %}
+                    <img src="{{ coverPhoto.url }}" alt="Cover {{ event.name }}">
+                  {% endif %}
               </div>
             </a>
             </li>

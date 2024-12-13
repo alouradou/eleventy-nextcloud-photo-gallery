@@ -20,6 +20,7 @@ async function downloadImageCollection(albums, incremental = true) {
                     console.log(`[nextcloud-img] Existing, download skipped ${localPath}`);
                     image.href = localUrl;
                     image.url = localUrl;
+                    image.isCover = imageName.toLowerCase().startsWith("cover");
                     continue; // Skip this image in the loop
                 } catch (err) {
                     err.code === 'ENOENT' // Error no entity is normal, is this case : download
@@ -33,6 +34,7 @@ async function downloadImageCollection(albums, incremental = true) {
 
                 image.href = localUrl;
                 image.url = localUrl;
+                image.isCover = imageName.toLowerCase().startsWith("cover");
             } catch (err) {
                 console.error(`[nextcloud-img] Error downloading ${JSON.stringify(image)}: ${err.message}`);
             }

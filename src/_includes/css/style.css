@@ -1,3 +1,4 @@
+@charset "UTF-8";
 header .nav-main {
   margin: 0 auto;
   max-width: 1100px;
@@ -687,6 +688,20 @@ h2, .h2 {
   }
   .gallery .gallery-list, .gallery .event-list, .event .gallery-list, .event .event-list {
     grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  }
+  .gallery .gallery-list li, .gallery .event-list li, .event .gallery-list li, .event .event-list li {
+    position: relative;
+    overflow: hidden; /* Assure que l'image ne dépasse pas du conteneur */
+    border-radius: 0.5rem; /* Optionnel : pour arrondir les coins */
+    cursor: pointer;
+  }
+  .gallery .gallery-list li picture, .gallery .event-list li picture, .event .gallery-list li picture, .event .event-list li picture {
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out; /* Animation fluide */
+    transform: scale(1); /* Taille normale par défaut */
+  }
+  .gallery .gallery-list li:hover picture, .gallery .event-list li:hover picture, .event .gallery-list li:hover picture, .event .event-list li:hover picture {
+    transform: scale(1.1); /* Zoom sur l'image */
+    filter: brightness(1.1); /* Optionnel : améliore légèrement la luminosité */
   }
   footer .footer-content .footer-info.home {
     justify-content: flex-start;

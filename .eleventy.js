@@ -1,11 +1,10 @@
-const CleanCSS = require("clean-css");
 const { minify } = require("terser");
 const metagen = require("eleventy-plugin-metagen");
 const eleventyNavigation = require("@11ty/eleventy-navigation");
-const Image = require("@11ty/eleventy-img");
 const setupPhotoswipe = require("./config/photoswipe.js")
 const collectionsConfig = require("./config/collections.js")
 const shortcodeConfig = require("./config/shortcodes.js")
+const filterConfig = require("./config/filters.js")
 
 module.exports = (eleventyConfig) => {
 
@@ -13,6 +12,7 @@ module.exports = (eleventyConfig) => {
 
   setupPhotoswipe(eleventyConfig);
   collectionsConfig(eleventyConfig);
+  filterConfig(eleventyConfig);
 
   eleventyConfig.addPlugin(metagen);
   eleventyConfig.addPlugin(eleventyNavigation);
@@ -31,18 +31,6 @@ module.exports = (eleventyConfig) => {
   eleventyConfig.addPassthroughCopy("./src/js");
   eleventyConfig.addPassthroughCopy("./src/favicon_data");
 
-  eleventyConfig.addFilter("stringify", function (obj){
-    return JSON.stringify(obj, null, 2)
-  })
-
-  eleventyConfig.addFilter('filterByYear', function(events, year) {
-      return events.filter(event => event.year === year);
-  });
-
-  // Create css-clean CSS Minifier filter
-  eleventyConfig.addFilter("cssmin", function (code) {
-    return new CleanCSS({}).minify(code).styles;
-  });
 
   // Create terser JS Minifier async filter (Nunjucks)
   eleventyConfig.addNunjucksAsyncFilter("jsmin", async function (
