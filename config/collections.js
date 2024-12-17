@@ -17,7 +17,7 @@ module.exports = function (eleventyConfig) {
         return directories;
     });
 
-    eleventyConfig.addCollection('events', async function (collectionsApi) {
+    eleventyConfig.addCollection('events', async function () {
         const events = [];
 
         const years = await getDirectories(config.ALBUM_PATH);
