@@ -84,5 +84,32 @@ async function downloadImage(remotePath, localPath) {
 }
 
 
+async function getTextFileContent(remotePath) {
+    try {
+        const client = await createNextcloudClient();
 
-module.exports = { createNextcloudClient,getDetailedFileList, getDirectories, getImagesFromDirectory, downloadImage };
+        try {
+            const readStream = await client.getReadStream(decodeURIComponent(remotePath));
+
+            const chunks = [];
+            await new Promise((resolve, reject) => {
+                readStream.on('data', (chunk) => {
+                    chunks.push(chunk);
+                });
+                readStream.on('end', resolve);
+                readStream.on('error', reject);
+            });
+
+            const content = Buffer.concat(chunks).toString('utf-8');
+            console.log(`[nextcloud-link] Readme content: ${content}`)
+            return content;
+        } catch (err) {
+            console.error(`[nextcloud-link] Error downloading`, err.message);
+        }
+    } catch (error) {
+        console.error('Erreur lors de l\'accès à Nextcloud:', error);
+        return '';
+    }
+}
+
+module.exports = { getDirectories, getImagesFromDirectory, downloadImage, getTextFileContent };

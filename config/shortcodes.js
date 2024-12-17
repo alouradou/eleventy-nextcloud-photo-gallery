@@ -36,47 +36,51 @@ module.exports = function (eleventyConfig) {
         }
 
         const IMAGE_DIR = imgDir || "./_site/images/";
-        const metadata = await Image(IMAGE_DIR + src, {
-            widths: widths || [300, 480, 640, 1024],
-            formats: ["webp", "jpeg"],
-            urlPath: "/_images/",
-            outputDir: "_site/_images",
-            defaultAttributes: {
-                loading: "lazy",
-                decoding: "async"
+        try {
+            const metadata = await Image(IMAGE_DIR + src, {
+                widths: widths || [300, 480, 640, 1024],
+                formats: ["webp", "jpeg"],
+                urlPath: "/_images/",
+                outputDir: "_site/_images",
+                defaultAttributes: {
+                    loading: "lazy",
+                    decoding: "async"
+                }
+            });
+
+            let lowsrc = metadata.jpeg[0];
+            let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
+
+            const sources = Object.values(metadata).map((imageFormat) => {
+                const srcType = imageFormat[0].sourceType;
+                const srcset = imageFormat.map(entry => entry.srcset).join(", ");
+                return `<source type="${srcType}" srcset="${srcset}" sizes="${sizes}">`
+            }).join("\n");
+
+            const img = `
+            <img
+                src="${lowsrc.url}"
+                width="${highsrc.width}"
+                height="${highsrc.height}"
+                alt="${alt}"
+                loading="lazy"
+                decoding="async"
+                class="${className || ''}"
+            >`;
+
+            if (pswp) {
+                const pswpAttributes = ` data-pswp-src="${highsrc.url}" data-pswp-width="${highsrc.width}" data-pswp-height="${highsrc.height}"`
+                return `<a href="${highsrc.url}" ${pswpAttributes} target="_blank" aria-label="${alt}">
+                            <picture>\n\t${sources}\n\t${img}</picture>
+                        </a>`;
             }
-        });
-
-        let lowsrc = metadata.jpeg[0];
-        let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
-
-        const sources = Object.values(metadata).map((imageFormat) => {
-            const srcType = imageFormat[0].sourceType;
-            const srcset = imageFormat.map(entry => entry.srcset).join(", ");
-            return `<source type="${srcType}" srcset="${srcset}" sizes="${sizes}">`
-        }).join("\n");
-
-        const img = `
-        <img
-            src="${lowsrc.url}"
-            width="${highsrc.width}"
-            height="${highsrc.height}"
-            alt="${alt}"
-            loading="lazy"
-            decoding="async"
-            class="${className || ''}"
-        >`;
-
-        if (pswp) {
-            const pswpAttributes = ` data-pswp-src="${highsrc.url}" data-pswp-width="${highsrc.width}" data-pswp-height="${highsrc.height}"`
-            return `<a href="${highsrc.url}" ${pswpAttributes} target="_blank" aria-label="${alt}">
-                        <picture>\n\t${sources}\n\t${img}</picture>
-                    </a>`;
+            else {
+                 return `<picture>\n\t${sources}\n\t${img}</picture>`;
+            }
+        } catch (e) {
+            console.warn(`[nextcloud-img] Unrecognized file ${e} ${src}`)
+            return '';
         }
-        else {
-             return `<picture>\n\t${sources}\n\t${img}</picture>`;
-        }
-
 
     });
 }
